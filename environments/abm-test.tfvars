@@ -15,7 +15,7 @@ group_id    = "grp_234677"
 ## ----------------------------------------------------------------------------
 product_id    = "prd_Adaptive_Media_Delivery"
 name          = "amd-template-test"
-version_notes = "AMD shared certificate test"
+version_notes = "AMD Akamaized Standard TLS profile test"
 
 # Hostname mode and security profile
 # ----------------------------------
@@ -26,16 +26,19 @@ version_notes = "AMD shared certificate test"
 #   SBD + etls=false  -> Secure By Default, edgesuite.net, Standard TLS profile
 #   EDGESUITE         -> edgesuite.net, Standard TLS profile, etls=false
 #   EDGEKEY           -> edgekey.net, Enhanced TLS profile, etls=true
-#   AKAMAIZED_HOSTNAME -> akamaized.net, Shared Cert profile, etls=true
+#   AKAMAIZED_HOSTNAME -> akamaized.net, Shared Cert edge hostname; etls=false
+#                         requests the Standard TLS-ready property profile
 #
-# For AKAMAIZED_HOSTNAME, hostnames must be labels only. Do not add the
-# .akamaized.net suffix; Terraform appends it to cname_from and cname_to.
-etls      = true
+# This test keeps the akamaized.net Shared Cert EHN but requests the
+# Standard TLS-ready property profile with etls=false. The EHN remains
+# akamaized.net; it is not changed to edgesuite.net.
+etls      = false
 hostnames = ["amd-template-test", "amd-template-test2"]
 
 edge_hostname_type = "AKAMAIZED_HOSTNAME"
 # certificate_id is required only for EDGEKEY and must be a CPS enrollment ID.
-certificate_id = null
+# certificate_id = null
+
 # Valid values: IPV4, IPV6_COMPLIANCE (dualstack), IPV6_PERFORMANCE (only IPv6)
 ip_behavior = "IPV6_COMPLIANCE"
 
